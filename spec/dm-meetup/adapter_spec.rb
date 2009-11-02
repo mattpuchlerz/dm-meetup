@@ -8,15 +8,17 @@ describe DataMapper::Adapters::MeetupAdapter do
     @adapter = DataMapper.setup :default, :adapter => 'meetup',
                                           :api_key => 'HereIsMyApiKey1234567890'
     
-    class ::Heffalump
-      include DataMapper::Resource
-      property :id,        Serial
-      property :color,     String
-      property :num_spots, Integer
-      property :striped,   Boolean
+    module ::Pooh
+      class Heffalump
+        include DataMapper::Resource
+        property :id,        Serial
+        property :color,     String
+        property :num_spots, Integer
+        property :striped,   Boolean
+      end
     end
     
-    @query = DataMapper::Query.new Heffalump.repository, Heffalump
+    @query = DataMapper::Query.new Pooh::Heffalump.repository, Pooh::Heffalump
     
   end
   
@@ -50,8 +52,8 @@ describe DataMapper::Adapters::MeetupAdapter do
   
   it "should not raise any errors when querying a model" do
     lambda {
-      Heffalump.all
-      Heffalump.first
+      Pooh::Heffalump.all
+      Pooh::Heffalump.first
     }.should_not raise_error
   end
   

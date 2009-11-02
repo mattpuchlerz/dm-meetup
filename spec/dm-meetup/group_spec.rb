@@ -17,6 +17,12 @@ end
 
 describe Meetup::Group do
   
+  it "should raise an error when you don't specify an certain properties in a query" do
+    lambda {
+      Meetup::Group.all
+    }.should_not raise_error(ArgumentError)
+  end
+  
   describe "instances" do
     
     before :each do
@@ -30,6 +36,7 @@ describe Meetup::Group do
     behavior_for_property :member_count,  94
     behavior_for_property :photo_url,     'http://meetup.com/Refresh-Chicago/path/to/image.png'
     behavior_for_property :postal_code,   '90210'
+    behavior_for_property :slug,          'Refresh-Chicago'
     behavior_for_property :url,           'http://meetup.com/Refresh-Chicago'
     
   end
