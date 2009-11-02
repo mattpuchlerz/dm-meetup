@@ -26,7 +26,7 @@ describe DataMapper::Adapters::MeetupAdapter do
     }.should raise_error(DataMapper::RepositoryNotSetupError)
   end
 
-  it "should read a Meetup API key" do
+  it "should read the API key" do
     @adapter.api_key.should == 'HereIsMyApiKey1234567890'
   end
   
@@ -36,16 +36,16 @@ describe DataMapper::Adapters::MeetupAdapter do
     }.should_not raise_error(NotImplementedError)
   end
   
-  it 'should not raise any errors when querying model' do
+  it "should make a request when trying to read" do
+    OpenURI.should_receive(:open_uri)
+    @adapter.read 'query'
+  end
+  
+  it "should not raise any errors when querying a model" do
     lambda {
       Heffalump.all
       Heffalump.first
     }.should_not raise_error
-  end
-  
-  it "should make a request when trying to read" do
-    OpenURI.should_receive(:open_uri)
-    @adapter.read 'query'
   end
   
   # it_should_behave_like 'An Adapter'
