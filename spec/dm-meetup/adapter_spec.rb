@@ -16,6 +16,8 @@ describe DataMapper::Adapters::MeetupAdapter do
       property :striped,   Boolean
     end
     
+    @query = DataMapper::Query.new Heffalump.repository, Heffalump
+    
   end
   
   before :each do
@@ -35,13 +37,15 @@ describe DataMapper::Adapters::MeetupAdapter do
   
   it "should implement #read" do
     lambda { 
-      @adapter.read 'query' 
+      @adapter.read @query
     }.should_not raise_error(NotImplementedError)
   end
   
   it "should make a request when trying to read" do
-    OpenURI.should_receive(:open_uri)
-    @adapter.read 'query'
+    Kernel.
+      should_receive(:open).
+      with('http://api.meetup.com/heffalumps.json?key=HereIsMyApiKey1234567890')
+    @adapter.read @query
   end
   
   it "should not raise any errors when querying a model" do

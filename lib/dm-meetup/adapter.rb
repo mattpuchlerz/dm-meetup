@@ -14,8 +14,10 @@ module DataMapper
       end
       
       def read query
-        uri = "http://api.meetup.com/"
-        open uri
+        resource     = query.model.to_s.pluralize.downcase
+        query_params = [ "key=#{ @api_key }" ]
+        query_string = query_params.join "&"
+        Kernel.open "http://api.meetup.com/#{ resource }.json?#{ query_string }"
       end
 
     end
