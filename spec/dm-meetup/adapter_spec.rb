@@ -20,6 +20,12 @@ describe DataMapper::Adapters::MeetupAdapter do
     
   end
   
+  it "should require the passing of an API key" do
+    lambda {
+      DataMapper.setup :default, :adapter => 'meetup'
+    }.should raise_error(DataMapper::RepositoryNotSetupError)
+  end
+
   it "should read a Meetup API key" do
     @adapter.api_key.should == 'HereIsMyApiKey1234567890'
   end
@@ -41,7 +47,7 @@ describe DataMapper::Adapters::MeetupAdapter do
     OpenURI.should_receive(:open_uri)
     @adapter.read 'query'
   end
-
+  
   # it_should_behave_like 'An Adapter'
   # 
   # Note that we aren't utilizing all of the standard 

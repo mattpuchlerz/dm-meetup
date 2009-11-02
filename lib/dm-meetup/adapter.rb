@@ -8,8 +8,9 @@ module DataMapper
       attr_reader :api_key
 
       def initialize name, options
+        raise DataMapper::RepositoryNotSetupError unless options[:api_key]
+        @api_key = options[:api_key]
         super
-        @api_key = options[:api_key] if options[:api_key]
       end
       
       def read query
