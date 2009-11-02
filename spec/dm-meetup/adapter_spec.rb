@@ -4,8 +4,6 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe DataMapper::Adapters::MeetupAdapter do
   
   before :all do
-
-    OpenURI.stub!(:open_uri).and_return ''
     
     @adapter = DataMapper.setup :default, :adapter => 'meetup',
                                           :api_key => 'HereIsMyApiKey1234567890'
@@ -18,6 +16,11 @@ describe DataMapper::Adapters::MeetupAdapter do
       property :striped,   Boolean
     end
     
+  end
+  
+  before :each do
+    # Not sure why this can't be #before(:all)
+    OpenURI.stub!(:open_uri).and_return ''    
   end
   
   it "should require the passing of an API key" do
